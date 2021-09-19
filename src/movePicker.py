@@ -26,7 +26,6 @@ class movePicker:
                             if(board[row_idx][idx] == 2):
                                 possible_points += 1
                             if(board[row_idx][idx] == 0):
-                                print('to my right!')
                                 all_legal_moves.append([row_idx,idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break       
@@ -39,7 +38,6 @@ class movePicker:
                             if(board[row_idx][idx] == 2):
                                 possible_points += 1
                             if(board[row_idx][idx] == 0):
-                                print('to my left!')
                                 all_legal_moves.append([row_idx,idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break
@@ -54,7 +52,6 @@ class movePicker:
                             if(board[idx][column_idx] == 2):
                                 possible_points += 1
                             if(board[idx][column_idx] == 0):
-                                print('above!')
                                 all_legal_moves.append([idx,column_idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break
@@ -67,16 +64,42 @@ class movePicker:
                             if(board[idx][column_idx] == 2):
                                 possible_points += 1
                             if(board[idx][column_idx] == 0):
-                                print('below')
                                 all_legal_moves.append([idx,column_idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break
                     
                     # Up Left Diagnol
-                    # if(board[row_idx-1][column_idx-1] == 2):
-                        # blah blah
+                    if(board[row_idx-1][column_idx-1] == 2):
+                        temp_col_idx = column_idx-2
+                        temp_row_idx = row_idx-2
+                        while(temp_row_idx >= 0 and temp_col_idx >= 0):
+                            if(board[temp_row_idx][temp_col_idx] == 1):
+                                break
+                            if(board[temp_row_idx][temp_col_idx] == 2):
+                                possible_points += 1
+                            if(board[temp_row_idx][temp_col_idx] == 0):
+                                print('up left diagnol')
+                                all_legal_moves.append([temp_row_idx,temp_col_idx,possible_points])
+                                break
+                            temp_col_idx -= 1
+                            temp_row_idx -= 1
+                                
                     
                     # Up Right Diagnol
+                    if(board[row_idx-1][column_idx+1] == 2):
+                        temp_col_idx = column_idx+2
+                        temp_row_idx = row_idx-2
+                        while(temp_row_idx >= 0 and temp_col_idx > len(board)):
+                            if(board[temp_row_idx][temp_col_idx] == 1):
+                                break
+                            if(board[temp_row_idx][temp_col_idx] == 2):
+                                possible_points += 1
+                            if(board[temp_row_idx][temp_col_idx] == 0):
+                                print('up right diagnol')
+                                all_legal_moves.append([temp_row_idx,temp_col_idx,possible_points])
+                                break
+                            temp_col_idx += 1
+                            temp_row_idx -= 1
                     
                     # Down Left Diagnol
                     
