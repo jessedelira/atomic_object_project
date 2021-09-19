@@ -10,13 +10,7 @@ from movePicker import movePicker
 mp = movePicker()
 
 def get_move(player, board):
-  moves = mp.get_next_move(board)
-  print('number of possible moves:',len(moves))
-  random_index = random.randint(0,len(moves)-1)
-  # TODO determine valid moves
-  # TODO determine best move
-  # Final: return np.get_next_move(board)
-  return moves[random_index]
+  return mp.get_next_move(board)
 
 def prepare_response(move):
   response = '{}\n'.format(move).encode()

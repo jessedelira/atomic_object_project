@@ -3,8 +3,8 @@ class movePicker:
     @classmethod
     def get_next_move(self,board):
         legal_moves = self.get_all_legal_moves(board)
-        # return get_best_move(legal_moves)
-        return legal_moves
+        return self.get_best_move(legal_moves)
+        
       
    
     @staticmethod
@@ -16,6 +16,7 @@ class movePicker:
                 possible_points = 1
                 # check if there is a one if a spot
                 if(board[row_idx][column_idx] == 1):
+                    
                     # Horizontal Right
                     if(board[row_idx][column_idx+1] == 2):
                         for idx in range(column_idx+2,len(board[row_idx])):  
@@ -28,29 +29,33 @@ class movePicker:
                                 print('to my right!')
                                 all_legal_moves.append([row_idx,idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
-                                break
-                            
+                                break       
                             
                     # Horizontal Left
                     if(board[row_idx][column_idx-1] == 2):
                         for idx in reversed(range(0,column_idx-1)):
                             if(board[row_idx][idx] == 1):
                                 break
+                            if(board[row_idx][idx] == 2):
+                                possible_points += 1
                             if(board[row_idx][idx] == 0):
                                 print('to my left!')
-                                all_legal_moves.append([row_idx,idx])
+                                all_legal_moves.append([row_idx,idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break
                             if(board[row_idx][idx] == 2):
                                 possible_points += 1
+                    
                     # Vertical Above
                     if(board[row_idx-1][column_idx] == 2):
                         for idx in reversed(range(0,row_idx-1)):
                             if(board[idx][column_idx] == 1):
                                 break
+                            if(board[idx][column_idx] == 2):
+                                possible_points += 1
                             if(board[idx][column_idx] == 0):
                                 print('above!')
-                                all_legal_moves.append([idx,column_idx])
+                                all_legal_moves.append([idx,column_idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break
                     
@@ -59,21 +64,24 @@ class movePicker:
                         for idx in range(row_idx+2,8):
                             if(board[idx][column_idx] == 1):
                                 break
+                            if(board[idx][column_idx] == 2):
+                                possible_points += 1
                             if(board[idx][column_idx] == 0):
                                 print('below')
-                                all_legal_moves.append([idx,column_idx])
+                                all_legal_moves.append([idx,column_idx,possible_points])
                                 print('all legal moves are:',all_legal_moves)
                                 break
-                    
-                    # Diagnol Case
-                    # Diagnol to up left, up right, down left, down right
-                    
                     
                     # Up Left Diagnol
                     # if(board[row_idx-1][column_idx-1] == 2):
                         # blah blah
                     
-                    # Else
+                    # Up Right Diagnol
+                    
+                    # Down Left Diagnol
+                    
+                    # Down Right Diagnol
+                    
                     else:
                         continue
                     
@@ -93,5 +101,4 @@ class movePicker:
         
         best_move.append(legal_moves[max_index][0])
         best_move.append(legal_moves[max_index][1])
-
         return best_move
