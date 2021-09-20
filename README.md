@@ -29,9 +29,3 @@ I overlooked the fact that maybe the remote "player" would also be connected in 
 
 ## Development Notes
 Used Python 3.8.3 for development and testing.
-
-## Suggestions
-UI Console
-- Convert the board to a numpy array, board is more understandable at first glance when print in this format.
-    - I used numpy to convert the list, please see ``src/client.py`` file.
-
