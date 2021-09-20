@@ -4,7 +4,6 @@ import sys
 import json
 import socket
 import numpy as np
-import random
 from movePicker import movePicker
 
 mp = movePicker()
@@ -15,7 +14,7 @@ def get_move(player, board):
 def prepare_response(move):
   response = '{}\n'.format(move).encode()
   print('sending {!r}'.format(response))
-  return response
+  return response        
 
 if __name__ == "__main__":
   port = int(sys.argv[1]) if (len(sys.argv) > 1 and sys.argv[1]) else 1337
