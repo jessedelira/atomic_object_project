@@ -1,13 +1,12 @@
 #!/usr/bin/python
 import random as rd
 class movePicker:
-    
-    used_directions = {"Up Right": 0,
-                           "Down Right": 0, "Up Left": 0, "Down Left": 0, "Vertical Above":0}
     @classmethod
     def get_next_move(self, board):
         legal_moves = self.get_all_legal_moves(board)
         return self.get_best_move(legal_moves)
+
+    
 
     @classmethod
     def get_all_legal_moves(self,board):
@@ -16,11 +15,10 @@ class movePicker:
         for row_idx in range(len(board)-1):
             for column_idx in range(len(board[row_idx])-1):
                 possible_points = 1
-                # check if there is a one a spot
-                if(board[row_idx][column_idx] == 1):
-
-                    # Horizontal Right
-                    if(board[row_idx][column_idx+1] == 2):
+                
+                if(self.player_token_in_current_position(board, column_idx, row_idx)):
+                    
+                    if(self.opp_coin_to_right_of_current_position(board,row_idx,column_idx)):
                         for idx in range(column_idx+2, len(board[row_idx])):
                             if(board[row_idx][idx] == 1):
                                 break
@@ -28,7 +26,6 @@ class movePicker:
                                 possible_points += 1
                             if(board[row_idx][idx] == 0):
                                 all_legal_moves.append([row_idx, idx, possible_points])
-                                print('all legal moves are:', all_legal_moves)
                                 break
 
                     # Horizontal Left
@@ -40,7 +37,6 @@ class movePicker:
                                 possible_points += 1
                             if(board[row_idx][idx] == 0):
                                 all_legal_moves.append([row_idx, idx, possible_points])
-                                print('all legal moves are:', all_legal_moves)
                                 break
                             if(board[row_idx][idx] == 2):
                                 possible_points += 1
@@ -54,8 +50,6 @@ class movePicker:
                                 possible_points += 1
                             if(board[idx][column_idx] == 0):
                                 all_legal_moves.append([idx, column_idx, possible_points])
-                                self.used_directions["Vertical Above"] += 1
-                                print('all legal moves are:', all_legal_moves)
                                 break
 
                     # Vertical Below
@@ -67,7 +61,6 @@ class movePicker:
                                 possible_points += 1
                             if(board[idx][column_idx] == 0):
                                 all_legal_moves.append([idx, column_idx, possible_points])
-                                print('all legal moves are:', all_legal_moves)
                                 break
 
                     # Up Left diagonal
@@ -80,10 +73,7 @@ class movePicker:
                             if(board[temp_row_idx][temp_col_idx] == 2):
                                 possible_points += 1
                             if(board[temp_row_idx][temp_col_idx] == 0):
-                                print('up left diagonal')
-                                self.used_directions['Up Left'] += 1
-                                all_legal_moves.append(
-                                    [temp_row_idx, temp_col_idx, possible_points])
+                                all_legal_moves.append([temp_row_idx, temp_col_idx, possible_points])
                                 break
                             temp_col_idx -= 1
                             temp_row_idx -= 1
@@ -98,10 +88,7 @@ class movePicker:
                             if(board[temp_row_idx][temp_col_idx] == 2):
                                 possible_points += 1
                             if(board[temp_row_idx][temp_col_idx] == 0):
-                                print('up right diagonal')
-                                self.used_directions['Up Right'] += 1
-                                all_legal_moves.append(
-                                    [temp_row_idx, temp_col_idx, possible_points])
+                                all_legal_moves.append([temp_row_idx, temp_col_idx, possible_points])
                                 break
                             temp_col_idx += 1
                             temp_row_idx -= 1
@@ -116,16 +103,11 @@ class movePicker:
                             if(board[temp_row_idx][temp_col_idx] == 2):
                                 possible_points += 1
                             if(board[temp_row_idx][temp_col_idx] == 0):
-                                print('down left diagonal')
-                                self.used_directions['Down Left'] += 1
                                 all_legal_moves.append([temp_row_idx, temp_col_idx, possible_points])
-                                print('temp_col_idx:',temp_col_idx)
-                                print('temp_row_idx',temp_row_idx)
                                 break
                             temp_col_idx -= 1
                             temp_row_idx += 1
                             
-
                     # Down Right diagonal
                     if(board[row_idx+1][column_idx+1] == 2):
                         temp_col_idx = column_idx+2
@@ -136,14 +118,12 @@ class movePicker:
                             if(board[temp_row_idx][temp_col_idx] == 2):
                                 possible_points += 1
                             if(board[temp_row_idx][temp_col_idx] == 0):
-                                print('down right diagonal')
-                                self.used_directions['Down Right'] += 1
                                 all_legal_moves.append([temp_row_idx, temp_col_idx, possible_points])
                                 break
                             temp_col_idx += 1
                             temp_row_idx += 1
 
-        print(self.used_directions)
+        
         if(len(all_legal_moves) == 0):
             temp = []
             for i in range(len(board)):
@@ -168,7 +148,6 @@ class movePicker:
 
     @staticmethod
     def get_best_move(legal_moves):
-        print('LENGTH OF LEGAL MOVES',len(legal_moves))
         best_move = []
         max_value = 0
         max_index = 0
@@ -184,3 +163,11 @@ class movePicker:
         best_move.append(legal_moves[max_index][0])
         best_move.append(legal_moves[max_index][1])
         return best_move
+    
+    @staticmethod
+    def player_token_in_current_position(board, column_idx, row_idx):
+        return board[row_idx][column_idx] == 1
+    
+    @staticmethod
+    def opp_coin_to_right_of_current_position(board,row_idx,column_idx):
+        return board[row_idx][column_idx+1] == 2
