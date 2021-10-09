@@ -150,3 +150,4 @@ class movePicker_get_all_legal_moves_test(unittest.TestCase):
     
 if __name__ == '__main__':
     unittest.main()
+
